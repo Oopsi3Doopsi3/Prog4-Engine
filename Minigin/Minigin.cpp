@@ -7,11 +7,13 @@
 #include "Minigin.h"
 
 #include <chrono>
+#include <thread>
 
 #include "InputManager.h"
 #include "SceneManager.h"
 #include "Renderer.h"
 #include "ResourceManager.h"
+#include "GameTime.h"
 
 SDL_Window* g_window{};
 
@@ -86,17 +88,13 @@ void dae::Minigin::Run(const std::function<void()>& load)
 	auto& sceneManager = SceneManager::GetInstance();
 	auto& input = InputManager::GetInstance();
 
-	// todo: this update loop could use some work.
 	bool doContinue = true;
-	auto lastTime = std::chrono::high_resolution_clock::now();
 	float lag = 0.f;
 	while (doContinue)
 	{
-		constexpr float fixedTimeStep = 0.01f;
-		const auto currentTime = std::chrono::high_resolution_clock::now();
-		const float deltaTime = std::chrono::duration<float>(currentTime - lastTime).count();
-		lastTime = currentTime;
-		lag += deltaTime;
+		//constexpr float fixedTimeStep = 0.01f;
+		GameTime::UpdateTime();
+		lag += GameTime::GetDeltaTime();
 
 		doContinue = input.ProcessInput();
 		//while(lag >= fixedTimeStep)	no need yet, no physics/networking yet
@@ -106,8 +104,11 @@ void dae::Minigin::Run(const std::function<void()>& load)
 		//}
 		sceneManager.Update();
 		renderer.Render();
+		
+		//constexpr float msPerFrame = 16.67f; //60fps
+		constexpr float msPerFrame = 6.94f; //144 fps
+		const auto sleepTime = GameTime::GetCurTime() + std::chrono::milliseconds(static_cast<long long>(msPerFrame)) - std::chrono::high_resolution_clock::now();
 
-		constexpr float msPerFrame = 16.67f;
-		const auto sleepTime = currentTime + std::chrono::milliseconds(msPerFrame) - std::chrono::high_resolution_clock::now();
+		std::this_thread::sleep_for(sleepTime);
 	}
 }
