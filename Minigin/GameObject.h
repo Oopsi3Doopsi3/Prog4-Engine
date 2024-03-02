@@ -7,7 +7,7 @@ namespace dae
 {
 	class Component;
 
-	class GameObject final
+	class GameObject final : std::enable_shared_from_this<GameObject>
 	{
 	public:
 		GameObject() = default;
@@ -20,6 +20,13 @@ namespace dae
 		void Update();
 		void Render() const;
 
+		Transform& GetTransform() { return m_Transform; }
+		const glm::vec3& GetWorldPosition();
+		void SetParent(const std::shared_ptr<GameObject>& parent, bool keepWorldPosition);
+		bool IsChild(const std::shared_ptr<GameObject>& potentialChild) const;
+		void RemoveChild(const std::shared_ptr<GameObject>& child);
+
+
 		template<typename T, typename... Args>
 		void AddComponent(Args&&... args)
 		{
@@ -27,7 +34,7 @@ namespace dae
 			m_pComponents.push_back(component);
 			
 			const auto pCastComponent{ static_cast<Component*>(component.get()) };
-			pCastComponent->m_pParentObject = this;
+			pCastComponent->SetParent(this);
 		}
 
 		template<typename T>
@@ -66,9 +73,15 @@ namespace dae
 			return false;
 		}
 
-		Transform& GetTransform() { return m_Transform; }
 	private:
 		Transform m_Transform{};
-		std::vector<std::shared_ptr<Component>> m_pComponents;
+
+		std::vector< std::shared_ptr<Component>> m_pComponents;
+
+		std::shared_ptr<GameObject> m_Parent;
+		std::vector<std::shared_ptr<GameObject>> m_Children;
+
+		void AddChild(const std::shared_ptr<GameObject>& child);
+		void UpdateWorldPosition();
 	};
 }

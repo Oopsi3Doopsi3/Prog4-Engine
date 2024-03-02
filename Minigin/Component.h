@@ -18,7 +18,7 @@ namespace dae
 
 		virtual void Update();
 		virtual void Render() const;
-
+		
 	protected:
 		Component() = default;
 
@@ -26,7 +26,8 @@ namespace dae
 		Transform GetTransform() const { return m_pParentObject->GetTransform(); }
 
 	private:
-		GameObject* m_pParentObject = nullptr;
+		GameObject* m_pParentObject;
+		void SetParent(GameObject* parent);
 	};
 
 }

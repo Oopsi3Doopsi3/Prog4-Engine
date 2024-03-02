@@ -12,6 +12,5 @@ void dae::FpsComponent::Update()
 	std::stringstream text;
 	text << std::fixed << std::setprecision(1) << GameTime::GetAverageFps() << " FPS";
 
-	std::shared_ptr<TextComponent> textComponent = GetParentObject()->GetComponent<TextComponent>();
 	m_TextComponent->SetText(text.str());
 }

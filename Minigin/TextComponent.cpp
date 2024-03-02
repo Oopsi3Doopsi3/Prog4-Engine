@@ -8,7 +8,7 @@
 #include "TextureRenderComponent.h"
 
 dae::TextComponent::TextComponent(const std::string& text, std::shared_ptr<Font> font)
-	: m_NeedsUpdate(true), m_Text(text), m_Font(std::move(font))
+	: m_Text(text), m_Font(std::move(font))
 {}
 
 void dae::TextComponent::Update()
