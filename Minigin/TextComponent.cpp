@@ -7,14 +7,17 @@
 #include "Texture2D.h"
 #include "TextureRenderComponent.h"
 
-dae::TextComponent::TextComponent(const std::string& text, std::shared_ptr<Font> font)
-	: m_Text(text), m_Font(std::move(font))
+dae::TextComponent::TextComponent(GameObject* owner, const std::string& text, std::shared_ptr<Font> font):
+Component(owner),
+m_Text(text),
+m_Font(std::move(font)),
+m_NeedsUpdate(true)
 {}
 
 void dae::TextComponent::Update()
 {
 	if(m_TextureRenderer == nullptr)
-		m_TextureRenderer = GetParentObject()->GetComponent<TextureRenderComponent>();
+		m_TextureRenderer = GetOwnerObject()->GetComponent<TextureRenderComponent>();
 
 	if (m_NeedsUpdate)
 	{

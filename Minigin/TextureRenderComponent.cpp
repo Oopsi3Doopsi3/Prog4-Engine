@@ -7,7 +7,7 @@ void dae::TextureRenderComponent::Render() const
 {
 	if (m_Texture != nullptr)
 	{
-		const auto& pos = GetParentObject()->GetWorldPosition();
+		const auto& pos = GetOwnerObject()->GetWorldPosition();
 		//const auto& pos = GetTransform().GetLocalPosition();
 		Renderer::GetInstance().RenderTexture(*m_Texture, pos.x, pos.y);
 	}

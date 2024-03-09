@@ -6,7 +6,7 @@ namespace dae
 	class RotatorComponent : public Component
 	{
 	public:
-		RotatorComponent(const glm::vec3& rotationCenter);
+		RotatorComponent(GameObject* owner, const glm::vec3& rotationCenter);
 
 		void Update() override;
 

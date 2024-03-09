@@ -8,9 +8,11 @@ namespace dae
 	class FpsComponent : public Component
 	{
 	public:
+		FpsComponent(GameObject* owner) : Component(owner) {}
+
 		void Update() override;
 
 	private:
-		std::shared_ptr<TextComponent> m_TextComponent;
+		TextComponent* m_TextComponent;
 	};
 }

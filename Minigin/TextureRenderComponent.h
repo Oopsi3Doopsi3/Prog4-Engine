@@ -10,6 +10,8 @@ namespace dae
 	class TextureRenderComponent : public Component
 	{
 	public:
+		TextureRenderComponent(GameObject* owner) : Component(owner) {}
+
 		void Render() const override;
 
 		void SetTexture(const std::string& filename);

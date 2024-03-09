@@ -7,9 +7,9 @@ namespace dae
 
 	class Component
 	{
-		friend class GameObject;
-
 	public:
+		Component(GameObject* owner) : m_pOwnerObject(owner) {}
+
 		virtual ~Component() = default;
 		Component(const Component& other) = delete;
 		Component(Component&& other) = delete;
@@ -18,17 +18,12 @@ namespace dae
 
 		virtual void Update();
 		virtual void Render() const;
-		
-	protected:
-		Component() = default;
 
-		GameObject* GetParentObject() const { return m_pParentObject; }
-		Transform GetTransform() const { return m_pParentObject->GetTransform(); }
+		GameObject* GetOwnerObject() const { return m_pOwnerObject; }
+		Transform& GetTransform() const { return m_pOwnerObject->GetTransform(); }
 
 	private:
-		GameObject* m_pParentObject;
-		void SetParent(GameObject* parent);
+		GameObject* m_pOwnerObject;
 	};
 
 }
-

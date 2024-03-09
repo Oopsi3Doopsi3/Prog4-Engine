@@ -2,8 +2,9 @@
 
 #include "GameTime.h"
 
-dae::RotatorComponent::RotatorComponent(const glm::vec3& rotationCenter)
-:m_RotationCenter(rotationCenter),
+dae::RotatorComponent::RotatorComponent(GameObject* owner, const glm::vec3& rotationCenter):
+Component(owner),
+m_RotationCenter(rotationCenter),
 m_TargetPos(rotationCenter)
 {
 }
