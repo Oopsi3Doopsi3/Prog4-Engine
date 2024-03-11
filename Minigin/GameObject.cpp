@@ -1,7 +1,7 @@
 #include "GameObject.h"
 
 #include "ResourceManager.h"
-#include "TextureRenderComponent.h"
+#include "PlotComponent.h"
 
 void dae::GameObject::Update()
 {
@@ -16,6 +16,11 @@ void dae::GameObject::Render() const
 	for(const auto& component : m_pComponents)
 	{
 		component->Render();
+
+		if (PlotComponent* intPlot = dynamic_cast<PlotComponent*>(component))
+		{
+			intPlot->RenderPlot();
+		}
 	}
 }
 

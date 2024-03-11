@@ -13,6 +13,6 @@ namespace dae
 		void Update() override;
 
 	private:
-		TextComponent* m_TextComponent;
+		TextComponent* m_TextComponent{};
 	};
 }
