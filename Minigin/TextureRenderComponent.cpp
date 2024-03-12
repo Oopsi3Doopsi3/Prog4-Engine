@@ -2,6 +2,7 @@
 
 #include "Renderer.h"
 #include "ResourceManager.h"
+#include "GameObject.h"
 
 void dae::TextureRenderComponent::Render() const
 {

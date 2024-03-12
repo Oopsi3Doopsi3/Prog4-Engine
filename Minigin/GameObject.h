@@ -1,16 +1,21 @@
 #pragma once
+#include <list>
 #include <memory>
+#include <string>
+
 #include "Transform.h"
 #include <vector>
+#include "Component.h"
 
 namespace dae
 {
 	class Component;
 
-	class GameObject final : std::enable_shared_from_this<GameObject>
+	class GameObject final
 	{
 	public:
-		GameObject() = default;
+		GameObject(const std::string& name);
+
 		~GameObject() = default;
 		GameObject(const GameObject& other) = delete;
 		GameObject(GameObject&& other) = delete;
@@ -22,9 +27,9 @@ namespace dae
 
 		Transform& GetTransform() { return m_Transform; }
 		const glm::vec3& GetWorldPosition();
-		void SetParent(const std::shared_ptr<GameObject>& parent, bool keepWorldPosition);
-		bool IsChild(const std::shared_ptr<GameObject>& potentialChild) const;
-		void RemoveChild(const std::shared_ptr<GameObject>& child);
+		void SetParent(GameObject* parent, bool keepWorldPosition);
+		
+		
 
 		void AddComponent(Component* component);
 
@@ -40,24 +45,27 @@ namespace dae
 			}
 		}
 
-		template<typename T>
-		T* GetComponent()
+		template<typename  ComponentType>
+		requires std::derived_from<ComponentType, Component>
+		ComponentType* GetComponent()
 		{
-			for (const auto& component : m_pComponents)
+			for(const auto& component : m_pComponents)
 			{
-				if (typeid(T) == typeid(*component)) {
-				return dynamic_cast<T*>(component);
+				if(typeid(ComponentType) == typeid(*component))
+				{
+					return dynamic_cast<ComponentType*>(component.get());
 				}
 			}
 			return nullptr;
 		}
 
-		template<typename T>
+		template<typename ComponentType>
+		requires std::derived_from<ComponentType, Component>
 		bool HasComponent() const
 		{
 			for (const auto& component : m_pComponents)
 			{
-				if (typeid(T) == typeid(*component)) {
+				if (typeid(ComponentType) == typeid(*component)) {
 					return true;
 				}
 			}
@@ -65,13 +73,19 @@ namespace dae
 		}
 
 	private:
+		std::string m_Name;
 		Transform m_Transform{};
 
-		std::vector<Component*> m_pComponents;
+		//std::vector<Component*> m_pComponents{};
+		std::list<std::unique_ptr<Component>> m_pComponents;
 
-		std::shared_ptr<GameObject> m_Parent;
-		std::vector<std::shared_ptr<GameObject>> m_Children;
+		GameObject* m_Parent;
+		std::vector<GameObject*> m_Children{};
 
 		void UpdateWorldPosition();
+
+		void RemoveChild(GameObject* child);
+		void AddChild(GameObject* child);
+		bool IsChild(GameObject* child) const;
 	};
 }

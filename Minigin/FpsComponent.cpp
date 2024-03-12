@@ -3,6 +3,7 @@
 #include <sstream>
 #include "TextComponent.h"
 #include "GameTime.h"
+#include "GameObject.h"
 
 void dae::FpsComponent::Update()
 {

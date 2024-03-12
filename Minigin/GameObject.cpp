@@ -3,6 +3,13 @@
 #include "ResourceManager.h"
 #include "PlotComponent.h"
 
+dae::GameObject::GameObject(const std::string& name):
+m_Name(name),
+m_Parent(nullptr)
+{
+	
+}
+
 void dae::GameObject::Update()
 {
 	for(const auto& component : m_pComponents)
@@ -13,14 +20,16 @@ void dae::GameObject::Update()
 
 void dae::GameObject::Render() const
 {
+	if (m_pComponents.empty()) return;
+
 	for(const auto& component : m_pComponents)
 	{
 		component->Render();
 
-		if (PlotComponent* intPlot = dynamic_cast<PlotComponent*>(component))
-		{
-			intPlot->RenderPlot();
-		}
+		//if (PlotComponent* intPlot = dynamic_cast<PlotComponent*>(component))
+		//{
+		//	intPlot->RenderPlot();
+		//}
 	}
 }
 
@@ -29,9 +38,9 @@ void dae::GameObject::AddComponent(Component* component)
 	m_pComponents.emplace_back(component);
 }
 
-void dae::GameObject::SetParent(const std::shared_ptr<GameObject>& parent, bool keepWorldPosition)
+void dae::GameObject::SetParent(GameObject* parent, bool keepWorldPosition)
 {
-	if (IsChild(parent) || parent.get() == this || m_Parent == parent)
+	if (IsChild(parent) || parent == this || m_Parent == parent)
 		return;
 
 	if (parent == nullptr)
@@ -39,34 +48,28 @@ void dae::GameObject::SetParent(const std::shared_ptr<GameObject>& parent, bool 
 	else
 	{
 		if (keepWorldPosition)
-			m_Transform.SetLocalPosition(m_Transform.GetLocalPosition() - m_Parent->GetTransform().GetWorldPosition());
+			m_Transform.SetLocalPosition(m_Transform.GetWorldPosition() - m_Parent->GetTransform().GetWorldPosition());
 		m_Transform.SetPositionDirty();
 	}
-	if (m_Parent) m_Parent->RemoveChild(shared_from_this());
+	if (m_Parent) m_Parent->RemoveChild(this);
 	m_Parent = parent;
-	if (m_Parent) m_Parent->m_Children.emplace_back(this);
+	if (m_Parent) m_Parent->AddChild(this);
 }
 
-bool dae::GameObject::IsChild(const std::shared_ptr<GameObject>& potentialChild) const
+bool dae::GameObject::IsChild(GameObject* child) const
 {
-	for(const auto& child : m_Children)
-	{
-		if (child == potentialChild)
-			return true;
-	}
-	return false;
+	const auto found = std::ranges::find(m_Children, child);
+	return found != m_Children.end();
 }
 
-void dae::GameObject::RemoveChild(const std::shared_ptr<GameObject>& child)
+void dae::GameObject::RemoveChild(GameObject* child)
 {
-	for(auto it = m_Children.begin(); it != m_Children.end(); ++it)
-	{
-		if(*it == child)
-		{
-			m_Children.erase(it);
-			return;
-		}
-	}
+	std::erase(m_Children, child);
+}
+
+void dae::GameObject::AddChild(GameObject* child)
+{
+	m_Children.push_back(child);
 }
 
 const glm::vec3& dae::GameObject::GetWorldPosition()

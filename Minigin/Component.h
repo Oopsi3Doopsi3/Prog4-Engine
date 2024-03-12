@@ -1,9 +1,10 @@
 #pragma once
-#include "GameObject.h"
+//#include "GameObject.h"
 
 namespace dae
 {
 	class Transform;
+	class GameObject;
 
 	class Component
 	{
@@ -20,7 +21,7 @@ namespace dae
 		virtual void Render() const;
 
 		GameObject* GetOwnerObject() const { return m_pOwnerObject; }
-		Transform& GetTransform() const { return m_pOwnerObject->GetTransform(); }
+		Transform& GetTransform() const;
 
 	private:
 		GameObject* m_pOwnerObject;

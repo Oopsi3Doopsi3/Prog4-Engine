@@ -1,5 +1,4 @@
 #include "Scene.h"
-#include "GameObject.h"
 
 #include <algorithm>
 
@@ -11,14 +10,15 @@ Scene::Scene(const std::string& name) : m_name(name) {}
 
 Scene::~Scene() = default;
 
-void Scene::Add(std::shared_ptr<GameObject> object)
+GameObject* Scene::Add(const std::string& name)
 {
-	m_objects.emplace_back(std::move(object));
+	m_objects.emplace_back(std::make_unique<GameObject>(name));
+	return m_objects.back().get();
 }
 
-void Scene::Remove(std::shared_ptr<GameObject> object)
+void Scene::Remove()
 {
-	m_objects.erase(std::remove(m_objects.begin(), m_objects.end(), object), m_objects.end());
+	//m_objects.erase(std::remove(m_objects.begin(), m_objects.end(), object), m_objects.end());
 }
 
 void Scene::RemoveAll()

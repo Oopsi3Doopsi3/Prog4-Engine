@@ -1,4 +1,7 @@
 #pragma once
+#include <vector>
+#include <valarray>
+
 #include "Component.h"
 
 namespace dae

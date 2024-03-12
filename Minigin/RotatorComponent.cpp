@@ -1,6 +1,7 @@
 #include "RotatorComponent.h"
 
 #include "GameTime.h"
+#include "GameObject.h"
 
 dae::RotatorComponent::RotatorComponent(GameObject* owner, const glm::vec3& rotationCenter):
 Component(owner),
