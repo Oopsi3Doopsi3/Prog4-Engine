@@ -15,6 +15,7 @@ namespace dae
 
 		void Update();
 		void Render() const;
+		void LateUpdate();
 
 		~Scene();
 		Scene(const Scene& other) = delete;
@@ -28,7 +29,9 @@ namespace dae
 		std::string m_name;
 		std::vector <std::unique_ptr<GameObject>> m_objects{};
 
-		static unsigned int m_idCounter; 
+		static unsigned int m_idCounter;
+
+		void DestroyObjects();
 	};
 
 }

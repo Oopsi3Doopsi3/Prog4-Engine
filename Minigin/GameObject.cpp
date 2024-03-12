@@ -20,8 +20,6 @@ void dae::GameObject::Update()
 
 void dae::GameObject::Render() const
 {
-	if (m_pComponents.empty()) return;
-
 	for(const auto& component : m_pComponents)
 	{
 		component->Render();
@@ -33,9 +31,26 @@ void dae::GameObject::Render() const
 	}
 }
 
+void dae::GameObject::LateUpdate()
+{
+	
+}
+
 void dae::GameObject::AddComponent(Component* component)
 {
 	m_pComponents.emplace_back(component);
+}
+
+void dae::GameObject::DestroyComponents()
+{
+	m_pComponents.erase(
+		std::remove_if(
+			m_pComponents.begin(),
+			m_pComponents.end(),
+			[](const std::unique_ptr<Component>& component) {return component->GetMarkedDestroy(); }
+		),
+		m_pComponents.end()
+	);
 }
 
 void dae::GameObject::SetParent(GameObject* parent, bool keepWorldPosition)

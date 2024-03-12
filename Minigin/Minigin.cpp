@@ -103,7 +103,10 @@ void dae::Minigin::Run(const std::function<void()>& load)
 		//	lag -= fixedTimeStep;
 		//}
 		sceneManager.Update();
+		sceneManager.LateUpdate();
+
 		renderer.Render();
+
 		
 		//constexpr float msPerFrame = 16.67f; //60fps
 		constexpr float msPerFrame = 6.94f; //144 fps

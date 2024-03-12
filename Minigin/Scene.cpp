@@ -34,6 +34,21 @@ void Scene::Update()
 	}
 }
 
+void Scene::LateUpdate()
+{
+	for(auto& object : m_objects)
+	{
+		object->LateUpdate();
+	}
+
+	for(auto& object : m_objects)
+	{
+		object->DestroyComponents();
+	}
+
+	DestroyObjects();
+}
+
 void Scene::Render() const
 {
 	for (const auto& object : m_objects)
@@ -42,3 +57,14 @@ void Scene::Render() const
 	}
 }
 
+void Scene::DestroyObjects()
+{
+	m_objects.erase(
+		std::remove_if(
+			m_objects.begin(),
+			m_objects.end(),
+			[](const std::unique_ptr<GameObject>& go) {return go->GetMarkedDestroy(); }
+		),
+		m_objects.end()
+	);
+}

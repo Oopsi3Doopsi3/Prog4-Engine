@@ -24,28 +24,19 @@ namespace dae
 
 		void Update();
 		void Render() const;
+		void LateUpdate();
 
 		Transform& GetTransform() { return m_Transform; }
 		const glm::vec3& GetWorldPosition();
 		void SetParent(GameObject* parent, bool keepWorldPosition);
 		
-		
+		void MarkDestroy() { m_MarkedDestroy = true; }
+		bool GetMarkedDestroy() const { return m_MarkedDestroy; }
 
 		void AddComponent(Component* component);
+		void DestroyComponents();
 
-		template<typename T>
-		void RemoveComponent()
-		{
-			for (auto it = m_pComponents.begin(); it != m_pComponents.end(); ++it)
-			{
-				if (typeid(T) == typeid(*(*it))) {
-					m_pComponents.erase(it);
-					return;
-				}
-			}
-		}
-
-		template<typename  ComponentType>
+		template<typename ComponentType>
 		requires std::derived_from<ComponentType, Component>
 		ComponentType* GetComponent()
 		{
@@ -57,6 +48,13 @@ namespace dae
 				}
 			}
 			return nullptr;
+		}
+
+		template<typename ComponentType>
+			requires std::derived_from<ComponentType, Component>
+		void RemoveComponent()
+		{
+			GetComponent<ComponentType>()->MarkDestroy();
 		}
 
 		template<typename ComponentType>
@@ -75,8 +73,8 @@ namespace dae
 	private:
 		std::string m_Name;
 		Transform m_Transform{};
+		bool m_MarkedDestroy{};
 
-		//std::vector<Component*> m_pComponents{};
 		std::list<std::unique_ptr<Component>> m_pComponents;
 
 		GameObject* m_Parent;

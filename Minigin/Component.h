@@ -1,5 +1,4 @@
 #pragma once
-//#include "GameObject.h"
 
 namespace dae
 {
@@ -20,11 +19,15 @@ namespace dae
 		virtual void Update();
 		virtual void Render() const;
 
+		void MarkDestroy() { m_MarkedDestroy = true; }
+		bool GetMarkedDestroy() const { return m_MarkedDestroy; }
+
 		GameObject* GetOwnerObject() const { return m_pOwnerObject; }
 		Transform& GetTransform() const;
 
 	private:
-		GameObject* m_pOwnerObject;
+		GameObject* m_pOwnerObject{};
+		bool m_MarkedDestroy{};
 	};
 
 }
