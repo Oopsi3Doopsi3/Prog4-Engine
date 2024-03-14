@@ -26,9 +26,14 @@ namespace dae
 		void Render() const;
 		void LateUpdate();
 
-		Transform& GetTransform() { return m_Transform; }
-		const glm::vec3& GetWorldPosition();
 		void SetParent(GameObject* parent, bool keepWorldPosition);
+
+		const glm::vec3& GetLocalPosition() const;
+		const glm::vec3& GetWorldPosition();
+
+		void SetLocalPosition(float x, float y, float z);
+		void SetLocalPosition(const glm::vec3& position);
+		void SetPositionDirty();
 		
 		void MarkDestroy() { m_MarkedDestroy = true; }
 		bool GetMarkedDestroy() const { return m_MarkedDestroy; }
@@ -72,18 +77,24 @@ namespace dae
 
 	private:
 		std::string m_Name;
-		Transform m_Transform{};
 		bool m_MarkedDestroy{};
 
+		//Transform
+		Transform m_LocalTransform{};
+		Transform m_WorldTransform{};
+		bool m_PositionDirty{ false };
+
+		//Components
 		std::list<std::unique_ptr<Component>> m_pComponents;
 
+		//Children
 		GameObject* m_Parent;
 		std::vector<GameObject*> m_Children{};
-
-		void UpdateWorldPosition();
 
 		void RemoveChild(GameObject* child);
 		void AddChild(GameObject* child);
 		bool IsChild(GameObject* child) const;
+
+		void UpdateWorldPosition();
 	};
 }

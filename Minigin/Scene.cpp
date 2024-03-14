@@ -16,9 +16,9 @@ GameObject* Scene::Add(const std::string& name)
 	return m_objects.back().get();
 }
 
-void Scene::Remove()
+void Scene::Remove(GameObject* object)
 {
-	//m_objects.erase(std::remove(m_objects.begin(), m_objects.end(), object), m_objects.end());
+	object->MarkDestroy();
 }
 
 void Scene::RemoveAll()

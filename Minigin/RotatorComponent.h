@@ -14,7 +14,7 @@ namespace dae
 
 	private:
 		glm::vec3 m_RotationCenter;
-		glm::vec3 m_TargetPos;
+		float m_Angle;
 	};
 }
 

@@ -23,7 +23,6 @@ namespace dae
 		bool GetMarkedDestroy() const { return m_MarkedDestroy; }
 
 		GameObject* GetOwnerObject() const { return m_pOwnerObject; }
-		Transform& GetTransform() const;
 
 	private:
 		GameObject* m_pOwnerObject{};
