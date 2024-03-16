@@ -1,4 +1,5 @@
 #pragma once
+#include "GameObject.h"
 
 namespace dae
 {
@@ -8,7 +9,7 @@ namespace dae
 	class Component
 	{
 	public:
-		Component(GameObject* owner) : m_pOwnerObject(owner) {}
+		Component(GameObject* owner) : m_pOwnerObject(owner){}
 
 		virtual ~Component() = default;
 		Component(const Component& other) = delete;

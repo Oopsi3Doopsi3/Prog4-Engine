@@ -19,6 +19,9 @@
     <Filter Include="imgui">
       <UniqueIdentifier>{5525c4b0-5bb5-4f65-862b-cd95790fc133}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Commands">
+      <UniqueIdentifier>{e1ff388c-92db-4074-980d-4a5f23dc19bc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Singleton.h">
@@ -108,6 +111,21 @@
     <ClInclude Include="..\3rdParty\imgui\backends\imgui_impl_sdl2.h">
       <Filter>imgui</Filter>
     </ClInclude>
+    <ClInclude Include="Command.h">
+      <Filter>Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="GameActorCommand.h">
+      <Filter>Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="MoveCommands.h">
+      <Filter>Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="MoveVerticalComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="MoveHorizontalComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ResourceManager.cpp">
@@ -193,6 +211,12 @@
     </ClCompile>
     <ClCompile Include="..\3rdParty\imgui\backends\imgui_impl_sdl2.cpp">
       <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="MoveVerticalComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="MoveHorizontalComponent.cpp">
+      <Filter>Components</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

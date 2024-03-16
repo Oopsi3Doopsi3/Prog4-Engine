@@ -89,12 +89,12 @@ void dae::Minigin::Run(const std::function<void()>& load)
 	auto& input = InputManager::GetInstance();
 
 	bool doContinue = true;
-	float lag = 0.f;
+	//float lag = 0.f;
 	while (doContinue)
 	{
 		//constexpr float fixedTimeStep = 0.01f;
 		GameTime::UpdateTime();
-		lag += GameTime::GetDeltaTime();
+		//lag += GameTime::GetDeltaTime();
 
 		doContinue = input.ProcessInput();
 		//while(lag >= fixedTimeStep)	no need yet, no physics/networking yet

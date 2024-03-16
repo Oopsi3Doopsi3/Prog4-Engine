@@ -13,7 +13,9 @@ Component(owner),
 m_Text(text),
 m_Font(std::move(font)),
 m_NeedsUpdate(true)
-{}
+{
+	m_TextureRenderer = GetOwnerObject()->GetComponent<TextureRenderComponent>();
+}
 
 void dae::TextComponent::Update()
 {

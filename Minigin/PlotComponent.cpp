@@ -9,7 +9,6 @@
 dae::PlotComponent::PlotComponent(GameObject* owner):
 Component(owner)
 {
-	
 }
 
 
@@ -23,7 +22,7 @@ void dae::PlotComponent::RenderPlot()
         m_StepsizeInt.clear();
         m_DurationInt.clear();
 
-        constexpr int size = 1 << 26;
+        constexpr int size = 1 << 23;
         int* buffer = new int[size] {};
 
         for (int stepsize = 1; stepsize <= 1024; stepsize *= 2)
@@ -79,7 +78,7 @@ void dae::PlotComponent::RenderPlot()
         m_StepsizeInt.clear();
         m_DurationInt.clear();
 
-        constexpr int size = 1 << 26;
+        constexpr int size = 1 << 23;
         GameObject3D* buffer = new GameObject3D[size] {};
 
         for (int stepsize = 1; stepsize <= 1024; stepsize *= 2)
@@ -130,7 +129,7 @@ void dae::PlotComponent::RenderPlot()
         m_StepsizeInt.clear();
         m_DurationInt.clear();
 
-        constexpr int size = 1 << 26;
+        constexpr int size = 1 << 23;
         GameObject3DAlt* buffer = new GameObject3DAlt[size]{};
 
         for (int stepsize = 1; stepsize <= 1024; stepsize *= 2)
