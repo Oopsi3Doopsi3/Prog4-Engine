@@ -9,7 +9,7 @@
 class dae::InputManager::ControllerInputImpl
 {
 public:
-	void AddCommand(unsigned int button, KeyState state, std::unique_ptr<GameActorCommand> actorCommand)
+	void AddCommand(unsigned int button, KeyState state, std::unique_ptr<GameObjectCommand> actorCommand)
 	{
 		m_ControllerCommands.emplace_back(InputCommand{ button, state, std::move(actorCommand)});
 	}
@@ -61,12 +61,12 @@ dae::InputManager::~InputManager()
 	delete m_pControllerInputImpl;
 }
 
-void dae::InputManager::AddControllerCommand(unsigned int button, KeyState state, std::unique_ptr<GameActorCommand> actorCommand)
+void dae::InputManager::AddControllerCommand(unsigned int button, KeyState state, std::unique_ptr<GameObjectCommand> actorCommand)
 {
 	m_pControllerInputImpl->AddCommand(button, state, std::move(actorCommand));
 }
 
-void dae::InputManager::AddKeyboardCommand(unsigned int button, KeyState state, std::unique_ptr<GameActorCommand> actorCommand)
+void dae::InputManager::AddKeyboardCommand(unsigned int button, KeyState state, std::unique_ptr<GameObjectCommand> actorCommand)
 {
 	m_KeyboardCommands.emplace_back(InputCommand{ button, state, std::move(actorCommand) });
 }

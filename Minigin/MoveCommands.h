@@ -1,44 +1,28 @@
 #pragma once
-#include "GameActorCommand.h"
+#include "GameObjectCommand.h"
+#include "GameTime.h"
 
 namespace dae
 {
-	class MoveHorizontalCommand final : public GameActorCommand
+	class MoveCommand final : public GameObjectCommand
 	{
 	public:
-		MoveHorizontalCommand(GameObject* actor, int direction):
-			GameActorCommand(actor),
-			m_Direction(direction)
+		MoveCommand(GameObject* object,const glm::vec3& direction, float speed):
+		GameObjectCommand(object),
+		m_Direction(direction),
+		m_Speed(speed)
 		{
-			m_pMoveComponent = GetGameActor()->GetComponent<MoveHorizontalComponent>();
 		}
 
 		void Execute() override
 		{
-			m_pMoveComponent->MoveHorizontal(m_Direction);
+			glm::vec3 movement = m_Direction * m_Speed * dae::GameTime::GetDeltaTime();
+			glm::vec3 newPos = GetGameActor()->GetLocalPosition() + movement;
+			GetGameActor()->SetLocalPosition(newPos);
 		}
 
 	private:
-		MoveHorizontalComponent* m_pMoveComponent;
-		int m_Direction;
-	};
-
-	class MoveVerticalCommand final : public GameActorCommand
-	{
-	public:
-		MoveVerticalCommand(GameObject* actor, int direction) :
-			GameActorCommand(actor),
-			m_Direction(direction)
-		{
-			m_pMoveComponent = GetGameActor()->GetComponent<MoveVerticalComponent>();
-		}
-
-		void Execute() override
-		{
-			m_pMoveComponent->MoveVertical(m_Direction);
-		}
-	private:
-		MoveVerticalComponent* m_pMoveComponent;
-		int m_Direction;
+		glm::vec3 m_Direction;
+		float m_Speed;
 	};
 }

@@ -22,6 +22,12 @@
     <Filter Include="Commands">
       <UniqueIdentifier>{e1ff388c-92db-4074-980d-4a5f23dc19bc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Components\PlayerComponents">
+      <UniqueIdentifier>{e1ee70b5-10c8-4c0d-a099-399016d9bb6a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Observers">
+      <UniqueIdentifier>{e0ad6b4a-62d5-4f69-bdcf-55d9dbe629a6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Singleton.h">
@@ -114,17 +120,32 @@
     <ClInclude Include="Command.h">
       <Filter>Commands</Filter>
     </ClInclude>
-    <ClInclude Include="GameActorCommand.h">
+    <ClInclude Include="GameObjectCommand.h">
       <Filter>Commands</Filter>
     </ClInclude>
     <ClInclude Include="MoveCommands.h">
       <Filter>Commands</Filter>
     </ClInclude>
-    <ClInclude Include="MoveVerticalComponent.h">
-      <Filter>Components</Filter>
+    <ClInclude Include="Observer.h">
+      <Filter>Observers</Filter>
     </ClInclude>
-    <ClInclude Include="MoveHorizontalComponent.h">
-      <Filter>Components</Filter>
+    <ClInclude Include="PlayerHealthComponent.h">
+      <Filter>Components\PlayerComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="HealthObserver.h">
+      <Filter>Observers</Filter>
+    </ClInclude>
+    <ClInclude Include="KillPlayerCommand.h">
+      <Filter>Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerScoreComponent.h">
+      <Filter>Components\PlayerComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="AddPlayerScoreCommand.h">
+      <Filter>Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="ScoreObserver.h">
+      <Filter>Observers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -212,11 +233,20 @@
     <ClCompile Include="..\3rdParty\imgui\backends\imgui_impl_sdl2.cpp">
       <Filter>imgui</Filter>
     </ClCompile>
-    <ClCompile Include="MoveVerticalComponent.cpp">
-      <Filter>Components</Filter>
+    <ClCompile Include="PlayerHealthComponent.cpp">
+      <Filter>Components\PlayerComponents</Filter>
     </ClCompile>
-    <ClCompile Include="MoveHorizontalComponent.cpp">
-      <Filter>Components</Filter>
+    <ClCompile Include="Observer.cpp">
+      <Filter>Observers</Filter>
+    </ClCompile>
+    <ClCompile Include="HealthObserver.cpp">
+      <Filter>Observers</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerScoreComponent.cpp">
+      <Filter>Components\PlayerComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="ScoreObserver.cpp">
+      <Filter>Observers</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

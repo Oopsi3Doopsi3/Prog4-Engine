@@ -4,15 +4,15 @@
 
 namespace dae
 {
-	class GameActorCommand : public Command
+	class GameObjectCommand : public Command
 	{
 	public:
-		GameActorCommand(GameObject* actor):
+		GameObjectCommand(GameObject* actor):
 		m_pActor(actor)
 		{
 		}
 
-		virtual ~GameActorCommand() = default;
+		virtual ~GameObjectCommand() = default;
 
 	protected:
 		GameObject* GetGameActor() const { return m_pActor; }

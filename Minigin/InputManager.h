@@ -2,7 +2,7 @@
 #include <map>
 
 #include "Singleton.h"
-#include "GameActorCommand.h"
+#include "GameObjectCommand.h"
 
 namespace dae
 {
@@ -20,14 +20,14 @@ namespace dae
 		{
 			unsigned int button;
 			KeyState state;
-			std::unique_ptr<GameActorCommand> command;
+			std::unique_ptr<GameObjectCommand> command;
 		};
 
 		InputManager();
-		~InputManager();
+		virtual ~InputManager() override;
 
-		void AddControllerCommand(unsigned int button, KeyState state, std::unique_ptr<GameActorCommand> actorCommand);
-		void AddKeyboardCommand(unsigned int button, KeyState state, std::unique_ptr<GameActorCommand> actorCommand);
+		void AddControllerCommand(unsigned int button, KeyState state, std::unique_ptr<GameObjectCommand> actorCommand);
+		void AddKeyboardCommand(unsigned int button, KeyState state, std::unique_ptr<GameObjectCommand> actorCommand);
 
 		bool ProcessInput();
 

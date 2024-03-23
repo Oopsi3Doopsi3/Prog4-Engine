@@ -22,6 +22,8 @@ namespace dae
 		GameObject& operator=(const GameObject& other) = delete;
 		GameObject& operator=(GameObject&& other) = delete;
 
+		const std::string& GetName() const { return m_Name; }
+
 		void Update();
 		void Render() const;
 		void LateUpdate();
